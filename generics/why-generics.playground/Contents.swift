@@ -51,7 +51,6 @@ let (first5, last5) = firstLastGeneric(movies)
 
 print(first5)
 print(last5)
-*/
 
 struct Movie: Equatable {
     let name: String
@@ -70,3 +69,42 @@ print(findIndex(from: names, valueToFind: "Mary"))
 
 let batman = Movie(name: "Batman")
 print(findIndex(from: movies, valueToFind: batman))
+ */
+
+func serializeToData<T: Encodable>(_ value: T) -> Data? {
+    return try? JSONEncoder().encode(value)
+}
+
+print(serializeToData("Hello World"))
+
+struct Movie: Encodable {
+    let name: String
+}
+
+print(serializeToData(Movie(name: "Batman")))
+
+protocol Fly { func fly() }
+protocol Teleport { func teleport() }
+protocol Strength { func throwObject() }
+
+typealias SuperHero = Fly & Teleport & Strength
+
+struct ElectronMan: SuperHero {
+    func fly() { }
+    func teleport() { }
+    func throwObject() { }
+}
+
+struct SuperMan: Fly {
+    func fly() { }
+}
+
+func attack<T: SuperHero>(value: T) {
+    
+}
+
+let electronMan = ElectronMan()
+attack(value: electronMan)
+
+let superman = SuperMan()
+// attack(value: superman) Superman은 Fly는 충족하지만 Teleport와 Strength가 충족되지 않으므로 이 상태로는 사용할 수 없다
