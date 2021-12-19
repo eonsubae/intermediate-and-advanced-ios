@@ -24,3 +24,29 @@ let (first2, last2) = firstLast(names)
 
 print(first2)
 print(last2)
+
+// 해결방법 2. 행동은 같으나 타입만 다를 때 제네릭을 활용해 하나의 함수로 해결한다
+
+func firstLastGeneric<T>(_ list: [T]) -> (T, T) {
+    return (list[0], list[list.count - 1])
+}
+
+let (first3, last3) = firstLastGeneric(numbers)
+let (first4, last4) = firstLastGeneric(names)
+
+print(first3)
+print(last3)
+
+print(first4)
+print(last4)
+
+struct Movie {
+    let name: String
+}
+
+let movies = [Movie(name: "Batman"), Movie(name: "Superman"), Movie(name: "Spiderman")]
+
+let (first5, last5) = firstLastGeneric(movies)
+
+print(first5)
+print(last5)
