@@ -107,7 +107,6 @@ attack(value: electronMan)
 
 let superman = SuperMan()
 // attack(value: superman) Superman은 Fly는 충족하지만 Teleport와 Strength가 충족되지 않으므로 이 상태로는 사용할 수 없다
- */
 
 enum Card: Comparable {
     case ace
@@ -142,3 +141,33 @@ if queen < ace {
 }
 
 print(lowest(list: [Card.ace, Card.queen, Card.king]))
+ */
+
+enum NetworkError: Error {
+    case badUrl
+}
+
+struct Post: Codable {
+    let title: String
+}
+
+enum Callback<T: Codable, K: Error> {
+    case success(T)
+    case failure(K)
+}
+
+func getPosts(completion: (Callback<[Post], NetworkError>) -> Void) {
+    // get all posts
+    let posts = [Post(title: "Hello World"), Post(title: "Introduction to Swift")]
+    completion(.success(posts))
+    completion(.failure(.badUrl))
+}
+
+getPosts { (result) in
+    switch result {
+    case .success(let posts):
+        print(posts)
+    case .failure(let error):
+        print(error)
+    }
+}
