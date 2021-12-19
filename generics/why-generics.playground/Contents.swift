@@ -69,7 +69,6 @@ print(findIndex(from: names, valueToFind: "Mary"))
 
 let batman = Movie(name: "Batman")
 print(findIndex(from: movies, valueToFind: batman))
- */
 
 func serializeToData<T: Encodable>(_ value: T) -> Data? {
     return try? JSONEncoder().encode(value)
@@ -108,3 +107,38 @@ attack(value: electronMan)
 
 let superman = SuperMan()
 // attack(value: superman) Superman은 Fly는 충족하지만 Teleport와 Strength가 충족되지 않으므로 이 상태로는 사용할 수 없다
+ */
+
+enum Card: Comparable {
+    case ace
+    case king
+    case queen
+    
+    static func < (lhs: Card, rhs: Card) -> Bool {
+        switch(lhs, rhs) {
+            case (king, ace): return true
+            case (queen, king): return true
+            case (queen, ace): return true
+            default: return false
+        }
+    }
+    
+}
+
+func lowest<T: Comparable>(list: [T]) -> T? {
+    let sortedList = list.sorted { $0 < $1 }
+    
+    return sortedList.first
+}
+
+print(lowest(list: [4,5,6,1,200,-100,999]))
+print(lowest(list: ["b","c","a","z"]))
+
+let ace = Card.ace
+let queen = Card.queen
+
+if queen < ace {
+    print("queen < ace")
+}
+
+print(lowest(list: [Card.ace, Card.queen, Card.king]))
